@@ -1,0 +1,56 @@
+.topic-box {
+  width: 428px;
+  padding: 20px;
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+
+  .topic-display {
+    position: relative;
+    color: #FFFFFF;
+    font-size: 42px;
+    text-align: left;
+    font-family: Helvetica, sans-serif;
+
+    .topic-title {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0 0 0 10px;
+      border-radius: 5px;
+    }
+
+    button.topic-button.edit {
+      position: absolute;
+      top: -20px;
+      left: 0px;
+    }
+  }
+
+  .topic-editor {
+    text-align: left;
+
+    input.topic-input {
+      height: 30px;
+      font-size: 18px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      padding: 0 10px;
+    }
+
+    .topic-input:focus {
+      outline: #333 solid thin;
+    }
+
+    button {
+      background: #10B2CB;
+      color: #000000;
+      height: 32px;
+      text-transform: uppercase;
+      border: 1px solid #555;
+      margin-left: 10px;
+      position: relative;
+      top: -2px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+  }
+}

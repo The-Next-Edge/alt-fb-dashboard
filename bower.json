@@ -1,0 +1,31 @@
+{
+  "name": "Junto",
+  "version": "0.0.1",
+  "authors": [
+    "Connor Turland <connorturland@gmail.com>"
+  ],
+  "description": "Discover and connect with people with similar intentions",
+  "main": "junto.js",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "AGPL",
+  "homepage": "http://junto.cc",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "SimpleWebRTC": "*",
+    "backbone": "1.0.0",
+    "underscore": "1.4.4",
+    "socket.io-client": "0.9.11",
+    "jquery": "1.9.0",
+    "howler": "~1.1.26",
+    "Autolinker.js": "~0.17.1"
+  }
+}

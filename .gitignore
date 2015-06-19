@@ -1,0 +1,11 @@
+node_modules/
+dist/
+doc/
+serve-development/js
+serve-development/img
+serve-development/css
+css
+deploy/
+.grunt/
+bower_components/
+**/.DS_Store

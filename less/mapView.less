@@ -1,0 +1,50 @@
+.map-box {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+
+  button.map-button.edit {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .map-editor {
+    text-align: left;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+
+    input.map-input {
+      height: 30px;
+      font-size: 18px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      padding: 0 10px;
+    }
+
+    .map-input:focus {
+      outline: #333 solid thin;
+    }
+
+    button {
+      background: #10B2CB;
+      color: #000000;
+      height: 32px;
+      text-transform: uppercase;
+      border: 1px solid #555;
+      margin-left: 10px;
+      position: relative;
+      top: -2px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+  }
+}

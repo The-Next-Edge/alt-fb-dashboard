@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>The Next Edge</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <style>
+        body         { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <% if (!user) { %>
+        <div class="jumbotron text-center">
+            <h1><span class="fa fa-lock"></span>The Next Edge</h1>
+
+            <p>Login or Register with:</p>
+
+            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+        </div>
+    <% } else { %>
+        <% for (var i=0; i<posts.length; i++) { %>
+            <div>
+                <%= posts[i].message %>
+            </div>
+        <% } %>
+    <% } %>
+
+</div>
+</body>
+</html>

@@ -15,15 +15,16 @@
         <div class="jumbotron text-center">
             <h1><span class="fa fa-lock"></span>The Next Edge</h1>
 
-            <p>Login or Register with:</p>
-
-            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Login with Facebook</a>
         </div>
     <% } else { %>
         <% for (var i=0; i<posts.length; i++) { %>
-            <div>
-                <%= posts[i].message %>
-            </div>
+            <% if (posts[i].message) { %>
+                <div>
+                    <%= posts[i].message %>
+                </div>
+                <br />
+            <% } %>
         <% } %>
     <% } %>
 

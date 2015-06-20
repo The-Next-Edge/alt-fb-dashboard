@@ -21,16 +21,22 @@ function fillIn() {
       }
 
       FB.setAccessToken(user.facebook.token);
-      Post.find({}, function (err, posts) {
+      Post.find({ from: null}, function (err, posts) {
+        console.log(posts.length);
         async.eachLimit(posts, 50, function (post, cb) {
-          console.log('fetching post ' + post.id);
-          FB.napi(post.id, function (err, response) {
-            if (err) {
-              console.log(post.id + ' failed');
-              return cb();
-            }
-            Post.update({ id: post.id }, response, {}, cb);
-          });
+          if (!post.from.id) {
+            console.log('fetching post ' + post.id);
+            FB.napi(post.id, function (err, response) {
+              if (err) {
+                console.log(post.id + ' failed');
+                return cb();
+              }
+              Post.update({ id: post.id }, response, {}, cb);
+            });
+          } else {
+            console.log('skipping ' + post.id);
+            cb();
+          }
         }, function (err) {
           mongoose.disconnect();
           if (err) {

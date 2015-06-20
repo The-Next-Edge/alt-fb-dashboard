@@ -3,7 +3,11 @@ var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var postSchema = mongoose.Schema({}, { strict: false });
+var postSchema = mongoose.Schema({
+  id: String
+}, { strict: false });
+
+postSchema.index({ id: 1 }, { unique: true });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Post', postSchema);

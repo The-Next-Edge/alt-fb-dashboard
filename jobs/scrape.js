@@ -29,35 +29,37 @@ function scrape() {
         var
           args;
 
-        if (until) args = { limit: 4, until: until };
-        else args = { limit: 4 };
+        if (until) args = { limit: 25, until: until, fields: ['id'] };
+        else {
+          args = {
+            limit: 25,
+            fields: ['id']
+          };
+        }
+
+         //, 'name', 'caption', 'created_time', 'description', 'from', 'to', 'icon', 'link', 'message', 'object_id', 'picture', 'place', 'privacy', 'properties', 'source', 'status_type', 'story', 'type', 'updated_time', 'with_tags']
 
         FB.napi('120497731371323/feed', 'get', args, function (err, response) {
-          if (err) return done(err);
+          if (err) {
+            return done(err);
+          }
           posts = posts.concat(response.data);
           until = url.parse(response.paging.next, true).query.until;
-          console.log(posts.length);
-          finished = response.data.length === 0;
-          done();
+          finished = response.data.length === 0 || until === until;
+          async.eachLimit(response.data, 1, function (post, cb) {
+            Post.update({ id: post.id }, post, { upsert: true }, cb);
+          }, done);
         });
       }, function () {
         return !finished;
       }, function (err) {
+        mongoose.disconnect();
+        console.log(posts.length);
         if (err) {
           console.log(err);
           return process.exit(1);
         }
-
-        Post.collection.insert(posts, function (err, docs) {
-          mongoose.disconnect();
-          if (err) {
-            console.log(err);
-            return process.exit(1);
-          }
-
-          console.log(docs.length);
-          process.exit(0);
-        });
+        process.exit(0);
       });
     });
   });

@@ -11,9 +11,12 @@ var postSchema = mongoose.Schema({
   from: {
     id: String,
     name: String
-  }
+  },
+  buckets: Array,
+  message: String
 }, { strict: false });
 
+postSchema.index({ buckets: 1 });
 postSchema.index({ id: 1 }, { unique: true });
 
 // create the model for users and expose it to our app

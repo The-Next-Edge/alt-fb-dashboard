@@ -5,7 +5,8 @@ var
     path = require('path'),
     sockets = require("./sockets"),
     port = 4000,
-    directory = path.resolve(__dirname, '..', 'serve' + '-' + process.env.NODE_ENV);
+    jsdirectory = path.resolve(__dirname, '..', 'js'),
+    cssdirectory = path.resolve(__dirname, '..', 'css');
 
 // Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
 var app = express();
@@ -28,6 +29,8 @@ mongoose.connect(configDB.url); // connect to our database
 require('./../config/passport')(passport); // pass passport for configuration
 
 // set up our express application
+app.use(express.static(cssdirectory));
+app.use(express.static(jsdirectory));
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms

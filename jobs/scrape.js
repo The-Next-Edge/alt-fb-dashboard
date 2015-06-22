@@ -46,7 +46,7 @@ function scrape() {
           posts = posts.concat(response.data);
           until = url.parse(response.paging.next, true).query.until;
           finished = response.data.length === 0 || until === until;
-          async.eachLimit(response.data, 1, function (post, cb) {
+          async.eachLimit(response.data, 25, function (post, cb) {
             Post.update({ id: post.id }, post, { upsert: true }, cb);
           }, done);
         });

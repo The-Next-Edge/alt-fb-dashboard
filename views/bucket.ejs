@@ -36,6 +36,9 @@
     <% } %>
 
     <div class="buckets">
+        <div class="bucket ui-widget-header">
+            <a href="/">home</a>
+        </div>
         <% for (var i=0; i<buckets.length; i++) { %>
             <div class="droppable bucket ui-widget-header" data-name="<%= buckets[i].name %>">
                 <a href="/bucket/<%= buckets[i].name %>"><%= buckets[i].name %></a>

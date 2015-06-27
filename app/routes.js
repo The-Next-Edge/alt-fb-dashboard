@@ -57,6 +57,37 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/by/me', isLoggedIn, function(req, res) {
+        Post.find({ 'from.id': req.user.facebook.id }, function (err, posts) {
+
+            Bucket.find({}, function (err, buckets) {
+                // todo: handle error
+                res.render('bucket.ejs', {
+                    bucket: 'Posts I Made',
+                    user: req.user,
+                    posts: posts,
+                    buckets: buckets
+                });
+            });
+        });
+    });
+
+    app.get('/by/:id', isLoggedIn, function(req, res) {
+        //FB.api('') make a call to FB for the user with that id so we have their name
+        Post.find({ 'from.id': req.params.id }, function (err, posts) {
+
+            Bucket.find({}, function (err, buckets) {
+                // todo: handle error
+                res.render('bucket.ejs', {
+                    bucket: 'Posts By [person]',
+                    user: req.user,
+                    posts: posts,
+                    buckets: buckets
+                });
+            });
+        });
+    });
+
     app.get('/bucket/:bucket', isLoggedIn, function(req, res) {
         console.log(req.params.bucket);
         Post.find({ buckets: req.params.bucket }, function (err, posts) {

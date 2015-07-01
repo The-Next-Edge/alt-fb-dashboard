@@ -13,7 +13,10 @@ var postSchema = mongoose.Schema({
     name: String
   },
   buckets: Array,
-  message: String
+  message: String,
+  comments: mongoose.Schema.Types.Mixed,
+  likes: mongoose.Schema.Types.Mixed,
+  created_time: String
 }, { strict: false });
 
 postSchema.index({ buckets: 1 });

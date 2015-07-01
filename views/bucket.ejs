@@ -13,10 +13,24 @@
 
     <% for (var i=0; i<posts.length; i++) { %>
         <% if (posts[i].message) { %>
-            <div class="draggable post" data-id="<%= posts[i].id %>">
-                <%= posts[i].message %>
+            <div class="draggable post col-md-4" data-id="<%= posts[i].id %>">
+                <div class="post-space">
+                    <div class="post-bar">
+                        <% var split = posts[i].from && posts[i].from.name ? posts[i].from.name.split(' ') : ["Frank", "Ocean"] %>
+                        <% var groupID = posts[i].id.split('_')[0] %>
+                        <% var postID = posts[i].id.split('_')[1] %>
+                        <div class="name"><%= split[0].charAt(0).toUpperCase() + split[1].charAt(0).toUpperCase() %></div>
+                        <div class="like-count"><%= posts[i].likes ? posts[i].likes.data.length : 0 %></div>
+                        <div class="comment-count"><%= posts[i].comments ? posts[i].comments.data.length : 0 %></div>
+                        <div class="date"><%= moment(posts[i].created_time).fromNow() %></div>
+                        <div class="link"><a href="https://facebook.com/<%= groupID %>/posts/<%= postID %>" target="_blank">view</a></div>
+                        <div class="handle">move</div>
+                    </div>
+                    <div class="post-message">
+                        <%= posts[i].message %>
+                    </div>
+                </div>
             </div>
-            <br />
         <% } %>
     <% } %>
 

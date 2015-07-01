@@ -3,7 +3,8 @@ var
   async = require('async'),
   configDB = require('./../config/database.js'),
   Post = require('../app/models/post'),
-  Bucket = require('../app/models/bucket');
+  Bucket = require('../app/models/bucket'),
+  moment = require('moment');
 
 module.exports = function(app, passport) {
 
@@ -28,7 +29,8 @@ module.exports = function(app, passport) {
                 res.render('index.ejs', {
                     user: req.user,
                     posts: response.data,
-                    buckets: buckets
+                    buckets: buckets,
+                    moment: moment
                 });
             });
 
@@ -51,7 +53,8 @@ module.exports = function(app, passport) {
                     bucket: 'Posts Where I\'m Mentioned',
                     user: req.user,
                     posts: posts,
-                    buckets: buckets
+                    buckets: buckets,
+                    moment: moment
                 });
             });
         });
@@ -66,7 +69,8 @@ module.exports = function(app, passport) {
                     bucket: 'Posts I Made',
                     user: req.user,
                     posts: posts,
-                    buckets: buckets
+                    buckets: buckets,
+                    moment: moment
                 });
             });
         });
@@ -82,7 +86,8 @@ module.exports = function(app, passport) {
                     bucket: 'Posts By [person]',
                     user: req.user,
                     posts: posts,
-                    buckets: buckets
+                    buckets: buckets,
+                    moment: moment
                 });
             });
         });
@@ -100,7 +105,8 @@ module.exports = function(app, passport) {
                     bucket: req.params.bucket,
                     user: req.user,
                     posts: posts,
-                    buckets: buckets
+                    buckets: buckets,
+                    moment: moment
                 });
             });
         });

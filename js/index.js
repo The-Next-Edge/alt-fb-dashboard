@@ -36,7 +36,8 @@ $(document).ready(function() {
 
   $('.draggable').draggable({ 
     zIndex: 2,
-    revert: true
+    revert: true,
+    handle: '.handle'
   });
 
   $(".droppable").droppable({

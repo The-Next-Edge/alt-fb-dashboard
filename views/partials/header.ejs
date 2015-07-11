@@ -1,7 +1,9 @@
 <header class="tne-header">
   <div class="container">
     <a href="/" class="block">The Next Edge</a>
-    <input type="text" placeholder="Search for posts..." class="block"></input>
+    <% if (bucket) { %><div class="block"><%= bucket %></div><% } %>
+    <input type="text" placeholder="Search for posts..." class="block" style="display:none;"></input>
+    <a href="/tracking" class="block">posts I'm tracking</a>
     <a href="/by/me" class="block">posts by me</a>
     <a href="/mentions/me" class="block">posts mentioning me</a>
     <div class="block"><%= user.facebook.name %></div>

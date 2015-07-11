@@ -3,6 +3,7 @@ var
   async = require('async'),
   configDB = require('./../config/database.js'),
   Post = require('../app/models/post'),
+  Track = require('../app/models/track'),
   Bucket = require('../app/models/bucket'),
   moment = require('moment');
 
@@ -30,7 +31,8 @@ module.exports = function(app, passport) {
                     user: req.user,
                     posts: response.data,
                     buckets: buckets,
-                    moment: moment
+                    moment: moment,
+                    bucket: false
                 });
             });
 
@@ -112,6 +114,33 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.get('/tracking', isLoggedIn, function(req, res) {
+        
+        Bucket.find({}, function (err, buckets) {   
+            Track.findOne({ user: req.user.facebook.id }, function (err, track) {
+                track = track || { posts: [] };
+                var $or = track.posts.map(function(p) { 
+                    return { id: p };
+                });
+                Post.find({
+                  $or: $or
+                }, function (err, posts) {
+
+                    posts = posts || [];
+
+                    // todo: handle error
+                    res.render('bucket.ejs', {
+                        bucket: 'Posts I\'m tracking',
+                        user: req.user,
+                        posts: posts,
+                        buckets: buckets,
+                        moment: moment
+                    });
+                });
+            });
+        });
+    });
+
     app.post('/buckets/new', isLoggedIn, function(req, res) {
         var newBucket = new Bucket();
 
@@ -133,6 +162,32 @@ module.exports = function(app, passport) {
             if (post.buckets.indexOf(req.body.bucket) < 0) {
                 post.buckets.push(req.body.bucket);
                 post.save(function (err) {
+                    if (err) {
+                        return res.sendStatus(500);
+                    }
+                    res.sendStatus(200);
+                });
+            } else {
+                res.sendStatus(200);
+            }
+        });
+    });
+
+    app.post('/tracking/addpost', isLoggedIn, function(req, res) {
+        if (!req.body.postId) return res.sendStatus(500);
+
+        Track.findOneOrCreate({ 
+            user: req.user.facebook.id
+        }, {
+            user: req.user.facebook.id,
+            posts: []
+        }, function (err, track) {
+            if (err) return res.sendStatus(500);
+
+            track.posts = track.posts || [];
+            if (track.posts.indexOf(req.body.postId) < 0) {
+                track.posts.push(req.body.postId);
+                track.save(function (err) {
                     if (err) {
                         return res.sendStatus(500);
                     }

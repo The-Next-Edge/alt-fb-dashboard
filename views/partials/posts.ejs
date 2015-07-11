@@ -1,0 +1,39 @@
+<div id="posts">
+
+    <div class="controls">
+        <div class="sort-label">sort by: </div>
+        <div class="sort" data-sort="default">default (activity)</div>
+        <div class="sort" data-sort="likes:desc">likes</div>
+        <div class="sort" data-sort="comments:desc">comments</div>
+        <div class="sort" data-sort="created:desc">date created</div>
+    </div>
+    <div class="clearfloat"></div>
+
+    <% for (var i=0; i<posts.length; i++) { %>
+        <% if (posts[i].message) { %>
+            <div class="draggable post col-md-4 mix"
+                 data-id="<%= posts[i].id %>"
+                 data-likes="<%= posts[i].likes ? posts[i].likes.data.length : 0 %>"
+                 data-comments="<%= posts[i].comments ? posts[i].comments.data.length : 0 %>"
+                 data-created="<%= posts[i].created_time %>"
+                 <% if (posts[i].buckets) { %>data-buckets="<%= posts[i].buckets.join(',') %>" <% } %>>
+                <div class="post-space">
+                    <div class="post-bar">
+                        <% var split = posts[i].from && posts[i].from.name ? posts[i].from.name.split(' ') : ["Frank", "Ocean"] %>
+                        <% var groupID = posts[i].id.split('_')[0] %>
+                        <% var postID = posts[i].id.split('_')[1] %>
+                        <div class="name" <% if (posts[i].from) { %>title="<%= posts[i].from.name %>"<% } %>><%= split[0].charAt(0).toUpperCase() + split[1].charAt(0).toUpperCase() %></div>
+                        <div class="like-count"><%= posts[i].likes ? posts[i].likes.data.length : 0 %></div>
+                        <div class="comment-count"><%= posts[i].comments ? posts[i].comments.data.length : 0 %></div>
+                        <div class="date"><%= moment(posts[i].created_time).fromNow() %></div>
+                        <div class="link"><a href="https://facebook.com/<%= groupID %>/posts/<%= postID %>" target="_blank">view</a></div>
+                        <div class="handle">move</div>
+                    </div>
+                    <div class="post-message">
+                        <%= posts[i].message %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+</div>

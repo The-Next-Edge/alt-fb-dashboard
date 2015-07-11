@@ -4,7 +4,7 @@ var
     io      = require("socket.io"),         // web socket external module
     path = require('path'),
     sockets = require("./sockets"),
-    port = 4000,
+    port = process.env.PORT || 4000,
     jsdirectory = path.resolve(__dirname, '..', 'js'),
     cssdirectory = path.resolve(__dirname, '..', 'css');
 
@@ -23,8 +23,9 @@ var session      = require('express-session');
 
 var configDB = require('./../config/database.js');
 
+console.log(process.env.DB_URL);
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(process.env.DB_URL || configDB.url); // connect to our database
 
 require('./../config/passport')(passport); // pass passport for configuration
 

@@ -1,8 +1,15 @@
-        <div class="buckets">
-            <% for (var i=0; i<buckets.length; i++) { %>
-                <div class="droppable bucket ui-widget-header" data-name="<%= buckets[i].name %>">
-                    <a href="/bucket/<%= buckets[i].name %>"><%= buckets[i].name %></a>
-                    <p>drop here</p>
-                </div>
-            <% } %>
-        </div>
+<div class="btn-toolbar buckets" role="toolbar">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default btn-lg droppable-tracking personal-bucket">
+      <a href="/tracking">tracking</a>
+    </button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default btn-lg create-new-bucket">new bucket</button>
+    <% for (var i=0; i<buckets.length; i++) { %>
+        <button type="button" class="btn btn-default btn-lg droppable-bucket bucket" data-name="<%= buckets[i].name %>">
+            <a href="/bucket/<%= buckets[i].name %>"><%= buckets[i].name %></a>
+        </button>
+    <% } %>
+  </div>
+</div>

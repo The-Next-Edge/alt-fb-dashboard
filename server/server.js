@@ -13,6 +13,7 @@ var app = express();
 
 console.log(__dirname);
 console.log(jsdirectory);
+console.log(cssdirectory);
 
 var mongoose = require('mongoose');
 var passport = require('passport');

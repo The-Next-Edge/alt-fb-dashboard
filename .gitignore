@@ -4,7 +4,6 @@ doc/
 serve-development/js
 serve-development/img
 serve-development/css
-css
 deploy/
 .grunt/
 bower_components/

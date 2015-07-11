@@ -1,0 +1,127 @@
+body {
+  background-color: #F5F5F5;
+}
+
+.clearfloat {
+  clear: both;
+}
+
+.tne-header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background-color: #FFF;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.tne-header .block {
+  display: inline-block;
+  margin: 10px;
+}
+
+.create-new-bucket {
+  margin-left: -80px;
+  /*border: 1px solid black;
+  padding: 5px;
+  position: absolute;
+  bottom: 15px;
+  left: -95px;
+  border-radius: 2px;
+  background: #FFF;
+  cursor: pointer;*/
+}
+
+#posts .controls {
+  float: right;
+}
+
+#posts .sort {
+  display: inline-block;
+  margin: 2px;
+  padding: 2px 4px;
+  border: 1px solid #DDD;
+  border-radius: 2px;
+  background-color: #FFF;
+  cursor: pointer;
+}
+
+#posts .sort-label {
+  display: inline-block;
+}
+
+.post {
+
+}
+
+.post-space {
+  margin: 8px 8px 16px 8px;
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  border-radius: 2px;
+  height: 400px;
+}
+
+.post-bar {
+  width: 50px;
+  height: 100%;
+  float: left;
+  border-right: 1px solid #DDD;
+  margin-right: 4px;
+  position: relative;
+}
+
+.post-bar div {
+  display: block;
+  padding: 8px;
+  border-bottom: 1px solid #DDD;
+}
+
+.post-bar .handle {
+  position: absolute;
+  bottom: 0;
+  border-bottom: none;
+  border-top: 1px solid #DDD;
+  cursor: move;
+}
+
+.post-bar .like-count {
+  background-image: url(like.png);
+  background-size: 15px 15px;
+  background-position: 30px 10px;
+  background-repeat: no-repeat;
+}
+.post-bar .comment-count {
+  background-image: url(comment.png);
+  background-size: 15px 15px;
+  background-position: 30px 10px;
+  background-repeat: no-repeat;
+}
+
+.post-message {
+  padding: 8px;
+  overflow-y: auto;
+  height: 398px;
+}
+
+
+
+.buckets {
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+  z-index: 1;
+}
+
+.buckets .bucket {
+  /*display: inline-block;
+  width: 200px;
+  height: 150px;
+  background: #DDDDDD;
+  margin: 0 5px;
+  font-size: 20px;
+  padding: 5px; */
+}
+
+.buckets .btn-primary a, .buckets .btn-info a {
+  color: #FFF;
+}

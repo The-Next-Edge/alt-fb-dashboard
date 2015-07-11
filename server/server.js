@@ -11,10 +11,6 @@ var
 // Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
 var app = express();
 
-console.log(__dirname);
-console.log(jsdirectory);
-console.log(cssdirectory);
-
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');

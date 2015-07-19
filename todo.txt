@@ -1,0 +1,32 @@
+______TODO_____________
+paging
+
+get data importing FULLY, and consistently
+
+enable expansion of a single post, including displaying comments
+
+use socket.io to show who's present on the site
+
+
+_______BONUS LIST__________
+enable the adding of comments, from the site
+
+search for posts by a certain person
+
+
+_________DONE____________________
+
+CHECK -- style the sorting things
+
+CHECK -- style the buckets
+
+
+CHECK -- change position of 'new bucket'
+
+
+CHECK -- add the personal tracking bucket
+
+
+CHECK -- highlight buckets that a post is currently in, when you hover over it
+
+

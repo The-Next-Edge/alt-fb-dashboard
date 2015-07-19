@@ -21,14 +21,6 @@ body {
 
 .create-new-bucket {
   margin-left: -80px;
-  /*border: 1px solid black;
-  padding: 5px;
-  position: absolute;
-  bottom: 15px;
-  left: -95px;
-  border-radius: 2px;
-  background: #FFF;
-  cursor: pointer;*/
 }
 
 #posts .controls {
@@ -36,13 +28,7 @@ body {
 }
 
 #posts .sort {
-  display: inline-block;
-  margin: 2px;
-  padding: 2px 4px;
-  border: 1px solid #DDD;
-  border-radius: 2px;
-  background-color: #FFF;
-  cursor: pointer;
+  
 }
 
 #posts .sort-label {
@@ -113,13 +99,7 @@ body {
 }
 
 .buckets .bucket {
-  /*display: inline-block;
-  width: 200px;
-  height: 150px;
-  background: #DDDDDD;
-  margin: 0 5px;
-  font-size: 20px;
-  padding: 5px; */
+  
 }
 
 .buckets .btn-primary a, .buckets .btn-info a {

@@ -5,7 +5,9 @@ get data importing FULLY, and consistently
 
 enable expansion of a single post, including displaying comments
 
-use socket.io to show who's present on the site
+use socket.io to show who's present on the site, could also show how many people online on slack (and slack link)
+
+show some stats, like, total number of posts
 
 
 _______BONUS LIST__________

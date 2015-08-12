@@ -10,6 +10,7 @@ var
 function scrape() {
   var
     posts = [],
+    lastUntil,
     until,
     finished = false;
 
@@ -45,7 +46,9 @@ function scrape() {
           }
           posts = posts.concat(response.data);
           until = url.parse(response.paging.next, true).query.until;
-          finished = response.data.length === 0 || until === until;
+          finished = response.data.length === 0 || until === lastUntil;
+          lastUntil = until;
+          console.log(posts.length);
           async.eachLimit(response.data, 25, function (post, cb) {
             Post.update({ id: post.id }, post, { upsert: true }, cb);
           }, done);
@@ -54,7 +57,7 @@ function scrape() {
         return !finished;
       }, function (err) {
         mongoose.disconnect();
-        console.log(posts.length);
+        console.log('done!', posts.length);
         if (err) {
           console.log(err);
           return process.exit(1);

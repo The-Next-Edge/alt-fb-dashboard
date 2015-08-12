@@ -18,7 +18,7 @@ function scrape() {
 
     console.log('connected to db');
 
-    User.findOne({}, function (err, user) {
+    User.findOne({ 'facebook.email': 'connorturland@gmail.com' }, function (err, user) {
       if (err || !user) {
         mongoose.disconnect();
         console.log(err || 'Couldn\'t find a token because there are no users');

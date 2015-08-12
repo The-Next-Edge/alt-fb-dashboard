@@ -9,7 +9,7 @@ var
 
 function fillIn() {
 
-  mongoose.connect(configDB.url, function () {
+  mongoose.connect(process.env.MONGOLAB_URI || configDB.url, function () {
 
     console.log('connected to db');
 

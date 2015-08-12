@@ -45,7 +45,8 @@ function scrape() {
             return done(err);
           }
           posts = posts.concat(response.data);
-          until = url.parse(response.paging.next, true).query.until;
+          console.log(response);
+          until = response.paging ? url.parse(response.paging.next, true).query.until : false;
           finished = response.data.length === 0 || until === lastUntil;
           lastUntil = until;
           console.log(posts.length);

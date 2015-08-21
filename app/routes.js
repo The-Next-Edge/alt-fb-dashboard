@@ -37,7 +37,7 @@ module.exports = function(app, passport) {
             });
 
             async.eachLimit(response.data, 25, function (post, cb) {
-                Post.update({ id: post.id }, post, { upsert: true }, function (err) { cb() });
+                Post.update({ id: post.id }, { $set: post }, { upsert: true }, function (err) { cb() });
             }, function(){});
         });
     });

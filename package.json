@@ -6,6 +6,7 @@
     "url": "git@github.com:metamaps/junto.git"
   },
   "dependencies": {
+    "agenda": "^0.6.28",
     "async": "^1.2.1",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",

@@ -5,51 +5,59 @@ var
   async = require('async'),
   User = require('./../app/models/user'),
   Post = require('../app/models/post'),
-  FB = require('fb');
+  FB = require('fb'),
+  dbUrl = process.env.MONGOLAB_URI || configDB.url;
 
-function fillIn() {
+function fillIn(database, opts, callback) {
 
-  mongoose.connect(process.env.MONGOLAB_URI || configDB.url, function () {
+  mongoose.connect(database, function () {
 
-    console.log('connected to db');
+    if (opts.logThings) console.log('connected to db');
 
     User.findOne({ 'facebook.email': 'connorturland@gmail.com' }, function (err, user) {
       if (err || !user) {
         mongoose.disconnect();
-        console.log(err || 'Couldn\'t find a token because there are no users');
-        process.exit(1);
+        callback(err || 'Couldn\'t find a token because there are no users');
       }
 
       FB.setAccessToken(user.facebook.token);
-      Post.find({ from: null}, function (err, posts) {
-        console.log(posts.length);
-        async.eachLimit(posts, 50, function (post, cb) {
-          if (!post.from.id) {
-            console.log('fetching post ' + post.id);
-            FB.napi(post.id, function (err, response) {
-              if (err) {
-                console.log(post.id + ' failed');
-                return cb();
-              }
-              Post.update({ id: post.id }, response, {}, cb);
-            });
-          } else {
-            console.log('skipping ' + post.id);
-            cb();
-          }
+      Post.find({ to_update: true }, function (err, posts) {
+        if (opts.logThings) console.log(posts.length);
+        async.eachLimit(posts, 10, function (post, cb) {
+
+          if (opts.logThings) console.log('fetching post ' + post.id);
+          FB.napi(post.id, function (err, response) {
+            if (err) {
+              if (opts.logThings) console.log(post.id + ' failed');
+              return cb();
+            }
+            response.to_update = false;
+            Post.update({ id: post.id }, { $set: response }, {}, cb);
+          });
+
         }, function (err) {
           mongoose.disconnect();
-          if (err) {
-            console.log(err);
-            return process.exit(1);
-          }
-
-          console.log('success');
-          process.exit(0);
+          callback(err);
         });
       });
     });
   });
 }
 
-fillIn();
+function cmd() {
+  fillIn(dbUrl, { logThings: true }, function (err) {
+    if (err) {
+      console.log(err);
+      return process.exit(1);
+    }
+    console.log('success!');
+    process.exit(0);
+  });
+}
+
+if (process.env.RUN_NOW) cmd();
+
+module.exports = function (database, callback) {
+  fillIn(database, { logThings: false }, callback);
+};
+

@@ -5,24 +5,25 @@ var
   async = require('async'),
   User = require('./../app/models/user'),
   Post = require('../app/models/post'),
-  FB = require('fb');
+  FB = require('fb'),
+  dbUrl = process.env.MONGOLAB_URI || configDB.url;
 
-function scrape() {
+function scrape(database, opts, callback) {
   var
+    pagesFetched = 0,
     posts = [],
     lastUntil,
     until,
     finished = false;
 
-  mongoose.connect(process.env.MONGOLAB_URI || configDB.url, function () {
+  mongoose.connect(database, function () {
 
-    console.log('connected to db');
+    if (opts.logThings) console.log('connected to db');
 
     User.findOne({ 'facebook.email': 'connorturland@gmail.com' }, function (err, user) {
       if (err || !user) {
         mongoose.disconnect();
-        console.log(err || 'Couldn\'t find a token because there are no users');
-        process.exit(1);
+        callback(err || 'Couldn\'t find a token because there are no users');
       }
 
       FB.setAccessToken(user.facebook.token);
@@ -45,29 +46,41 @@ function scrape() {
             return done(err);
           }
           posts = posts.concat(response.data);
-          console.log(response);
+          if (opts.logThings) console.log(response);
           until = response.paging ? url.parse(response.paging.next, true).query.until : false;
           finished = response.data.length === 0 || until === lastUntil;
           lastUntil = until;
-          console.log(posts.length);
+          if (opts.logThings) console.log(posts.length);
+
+          pagesFetched++;
           async.eachLimit(response.data, 25, function (post, cb) {
-            Post.update({ id: post.id }, post, { upsert: true }, cb);
+            post.to_update = true;
+            Post.update({ id: post.id }, { $set: post }, { upsert: true }, cb);
           }, done);
         });
       }, function () {
-        return !finished;
+        return !finished && (!opts.limit || pagesFetched <= opts.limit);
       }, function (err) {
         mongoose.disconnect();
-        console.log('done!', posts.length);
-        if (err) {
-          console.log(err);
-          return process.exit(1);
-        }
-        process.exit(0);
+        callback(err, posts.length);
       });
     });
   });
 }
 
-scrape();
-//module.exports = scrape;
+function cmd() {
+  scrape(dbUrl, { logThings: true }, function (err, number) {
+    console.log('done! found this many posts: ', number);
+    if (err) {
+      console.log(err);
+      return process.exit(1);
+    }
+    process.exit(0);
+  });
+}
+
+if (process.env.RUN_NOW) cmd();
+
+module.exports = function (database, callback) {
+  scrape(database, { limit: 2, logThings: false }, callback);
+};

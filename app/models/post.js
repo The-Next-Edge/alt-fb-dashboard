@@ -16,7 +16,8 @@ var postSchema = mongoose.Schema({
   message: String,
   comments: mongoose.Schema.Types.Mixed,
   likes: mongoose.Schema.Types.Mixed,
-  created_time: String
+  created_time: String,
+  to_update: Boolean
 }, { strict: false });
 
 postSchema.index({ buckets: 1 });

@@ -4,6 +4,7 @@ var
     io      = require("socket.io"),         // web socket external module
     path = require('path'),
     sockets = require("./sockets"),
+    schedule = require('./schedule'),
     port = process.env.PORT || 4000,
     jsdirectory = path.resolve(__dirname, '..', 'js'),
     cssdirectory = path.resolve(__dirname, '..', 'css');
@@ -45,6 +46,9 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
 require('./../app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+// scheduled jobs
+schedule(process.env.MONGOLAB_URI || configDB.url);
 
 // Start Socket.io so it attaches itself to Express server
 //var socketServer = io.listen(app, { "log level": 2 });
